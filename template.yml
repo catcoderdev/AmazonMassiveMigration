@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Resources:
+  MyQueue:
+    Type: 'AWS::SQS::Queue'
+    Properties:
+      QueueName: my-queue
+
+  MyFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Timeout: 600
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.10
+      CodeUri: .
+      Environment:
+        Variables:
+          MONGO_URI: "mongodb://t1IntegrationsAdmin2:admin_password@mongo:27017/t1Integrations"
+          MONGO_DB_NAME: "t1Integrations"
+          SQS_QUEUE_URL: "https://sqs.us-east-2.amazonaws.com/975049950271/shopify-webhook-queue"
+      Events:
+        ApiGateway:
+          Type: Api
+          Properties:
+            Path: /shopify/pull
+            Method: ANY
+
+Outputs:
+  MyQueueUrl:
+    Description: "URL of the created SQS queue"
+    Value: !Ref MyQueue
+  MyQueueArn:
+    Description: "ARN of the created SQS queue"
+    Value: !GetAtt MyQueue.Arn
+  MyApiUrl:
+    Description: "URL for the API Gateway"
+    Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
