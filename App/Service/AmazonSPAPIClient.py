@@ -40,7 +40,7 @@ class AmazonSPAPIClient:
         """
         # Calcular fechas (último año) - SP-API requiere formato ISO 8601
         end_date = datetime.now()
-        start_date = end_date - timedelta(days=365)
+        start_date = end_date - timedelta(days=(365 * 2))
 
         # Formatear en ISO 8601 con timezone UTC
         created_after = start_date.strftime('%Y-%m-%dT%H:%M:%S.000Z')
