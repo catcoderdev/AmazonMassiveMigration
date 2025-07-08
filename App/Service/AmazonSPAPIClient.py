@@ -39,7 +39,7 @@ class AmazonSPAPIClient:
             List[str]: Lista con todos los Amazon Order IDs
         """
         # Calcular fechas (último año) - SP-API requiere formato ISO 8601
-        end_date = datetime.now()
+        end_date = datetime.now() - timedelta(hours=5)
         start_date = end_date - timedelta(days=(365 * 2))
 
         # Formatear en ISO 8601 con timezone UTC
