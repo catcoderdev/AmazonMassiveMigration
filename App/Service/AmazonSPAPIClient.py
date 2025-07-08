@@ -222,6 +222,7 @@ class AmazonSPAPIClient:
                 }
 
                 # Hacer POST request
+                time.sleep(0.5)
                 response = requests.post(normalize_url, json=payload, headers=headers)
 
                 if response.status_code == 200:
