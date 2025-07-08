@@ -212,7 +212,7 @@ class AmazonSPAPIClient:
             try:
                 # Payload para el POST
                 payload = {
-                    "seller_id": seller_id,
+                    "seller_id": str(seller_id),
                     "order_id": order_id
                 }
 
